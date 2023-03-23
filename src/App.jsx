@@ -14,9 +14,9 @@ class App extends Component {
     country: undefined,
     temp_c: undefined,
     localtime: undefined,
-    error: undefined,
-    error_catch: undefined,
-    loader: false
+    error: "Название города сука!",
+    isLoading: false,
+    inputValue: ""
   }
 
 
@@ -25,7 +25,7 @@ class App extends Component {
     const city = event.target.elements.city.value;
 
     if (city) {
-      this.setState({loader: true})
+      this.setState({isLoading: true})
       try {
        const API_URL = await fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`);
        const data = await API_URL.json();
@@ -34,24 +34,32 @@ class App extends Component {
          country: data.location.country,
          temp_c: data.current.temp_c,
          localtime: data.location.localtime,
-         error: undefined,
-         error_catch: undefined
+         error: 'Название города сука!',
+         inputValue: city
        });
        }
       catch (e) {
-       this.setState( {
-         error_catch: '../../src/images/error-catch.jpg'
-       });
+        console.log(e, "error")
       }
       finally {
-       this.setState({loader: false})
+       this.setState({isLoading: false})
       };
     } else {
       this.setState({
-        error: "Введите название города",
-        error_catch: undefined
+        error: 'Название города сука!'
       });
-    };
+    }
+  }
+
+  handleClick = () => {
+    this.setState({
+      city: undefined,
+      country: undefined,
+      temp_c: undefined,
+      localtime: undefined,
+      error: 'Название города сука!',
+      inputValue: ""
+    })
   }
 
   render() {
@@ -59,17 +67,18 @@ class App extends Component {
       <div className="container">
         <Header />
 
-        <Form getWeather={this.getWeather}/>
+        <Form
+          getWeather={this.getWeather}
+          handleClick={this.handleClick}
+        />
 
-        {this.state.loader ? <CircularIndeterminate /> :
-
+        {this.state.isLoading  ? <CircularIndeterminate /> :
           <WeatherInfo
             city={this.state.city}
             country={this.state.country}
             temp_c={this.state.temp_c}
             localtime={this.state.localtime}
             error={this.error}
-            error_catch={this.error_catch}
           />
         }
       </div>

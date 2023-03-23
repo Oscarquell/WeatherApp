@@ -8,8 +8,10 @@ const WeatherInfo = (props) => {
     country,
     temp_c,
     localtime,
-    error_catch
+    error
   } = props
+
+  console.log(error)
 
   return (
     <div className="weather-block">
@@ -18,9 +20,9 @@ const WeatherInfo = (props) => {
           <p>Название локации: {city}, {country}</p>
           <p>Текущая температура: {temp_c} °C</p>
           <p>Местное время: {localtime}</p>
-          <p><img src={error_catch} alt=""/> </p>
         </div>
       }
+      <p>{error}</p>
     </div>
   );
 };

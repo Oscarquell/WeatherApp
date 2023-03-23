@@ -5,8 +5,13 @@ class Form extends Component {
   render() {
     return (
       <form className='form-block' onSubmit={this.props.getWeather}>
-        <input type="text" name="city" placeholder="Введите город"/>
+        <input
+          type="text"
+          name="city"
+          placeholder="Введите город"
+        />
         <button>Получить данные</button>
+        <input onClick={this.props.handleClick} type="reset" value='Очистить'/>
       </form>
     );
   }
