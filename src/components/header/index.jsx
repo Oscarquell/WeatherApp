@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
+import './style.css'
 
-const Header = () => {
-  return (
-    <div>
-      Узнай погоду в своем городе!
-    </div>
-  );
-};
+class Header extends Component {
+  render() {
+    return (
+      <div className='head-title'>
+        Узнай погоду в своем городе
+      </div>
+    );
+  }
+}
 
 export default Header;
