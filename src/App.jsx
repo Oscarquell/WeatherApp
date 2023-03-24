@@ -14,7 +14,10 @@ class App extends Component {
     country: undefined,
     temp_c: undefined,
     localtime: undefined,
-    error: "Название города сука!",
+    conditionText: undefined,
+    conditionIcon: undefined,
+    error: undefined,
+    errorCatch: undefined,
     isLoading: false,
     inputValue: ""
   }
@@ -34,19 +37,22 @@ class App extends Component {
          country: data.location.country,
          temp_c: data.current.temp_c,
          localtime: data.location.localtime,
-         error: 'Название города сука!',
+         conditionText: data.current.condition.text,
+         conditionIcon: data.current.condition.icon,
+         errorCatch: undefined,
+         error: undefined,
          inputValue: city
        });
        }
       catch (e) {
-        console.log(e, "error")
+        this.setState({errorCatch: "Сервер недоступен, либо неверно введено название города."})
       }
       finally {
        this.setState({isLoading: false})
       };
     } else {
       this.setState({
-        error: 'Название города сука!'
+        error: 'Введите название города!'
       });
     }
   }
@@ -57,7 +63,10 @@ class App extends Component {
       country: undefined,
       temp_c: undefined,
       localtime: undefined,
-      error: 'Название города сука!',
+      conditionText: undefined,
+      conditionIcon: undefined,
+      error: undefined,
+      errorCatch: undefined,
       inputValue: ""
     })
   }
@@ -78,7 +87,10 @@ class App extends Component {
             country={this.state.country}
             temp_c={this.state.temp_c}
             localtime={this.state.localtime}
-            error={this.error}
+            error={this.state.error}
+            conditionText={this.state.conditionText}
+            conditionIcon={this.state.conditionIcon}
+            errorCatch={this.state.errorCatch}
           />
         }
       </div>

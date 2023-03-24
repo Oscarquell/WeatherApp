@@ -8,21 +8,28 @@ const WeatherInfo = (props) => {
     country,
     temp_c,
     localtime,
-    error
+    error,
+    conditionText,
+    conditionIcon,
+    errorCatch
   } = props
-
-  console.log(error)
 
   return (
     <div className="weather-block">
       {city &&
         <div>
-          <p>Название локации: {city}, {country}</p>
-          <p>Текущая температура: {temp_c} °C</p>
-          <p>Местное время: {localtime}</p>
+          <p className='city'>{city}, {country}
+            <>
+              <img src={conditionIcon} alt=""/>
+            </>
+          </p>
+          <p className='city'>Облачность:  {conditionText}</p>
+          <p className='city'>Температура воздуха:  {temp_c} °C</p>
+          <p className='city'>Местное время: {localtime}</p>
         </div>
       }
-      <p>{error}</p>
+      <p className="error-text">{error}{errorCatch}</p>
+
     </div>
   );
 };
