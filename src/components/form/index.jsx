@@ -11,7 +11,7 @@ class Form extends Component {
           placeholder="Введите город"
         />
         <button>Получить данные</button>
-        <input onClick={this.props.handleClick} type="reset" value='Очистить'/>
+        <input type="reset" value='Очистить'/>
       </form>
     );
   }

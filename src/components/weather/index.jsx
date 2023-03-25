@@ -11,7 +11,8 @@ const WeatherInfo = (props) => {
     error,
     conditionText,
     conditionIcon,
-    errorCatch
+    errorCatch,
+    nameError
   } = props
 
   return (
@@ -28,7 +29,7 @@ const WeatherInfo = (props) => {
           <p className='city'>Местное время: {localtime}</p>
         </div>
       }
-      <p className="error-text">{error}{errorCatch}</p>
+      <p className="error-text">{error}{errorCatch}{nameError}</p>
 
     </div>
   );
