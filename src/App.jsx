@@ -16,10 +16,8 @@ class App extends Component {
     localtime: undefined,
     conditionText: undefined,
     conditionIcon: undefined,
-    error: undefined,
-    errorCatch: undefined,
-    nameError: undefined,
     isLoading: false,
+    error: undefined
   }
 
   defaultStateFunction() {
@@ -38,7 +36,7 @@ class App extends Component {
     const city = event.target.elements.city.value;
 
     if (city) {
-      this.setState({isLoading: true})
+        this.setState({isLoading: true})
         fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`)
           .then(response => {
             if (!response.ok) {
@@ -54,38 +52,37 @@ class App extends Component {
               localtime: data.location.localtime,
               conditionText: data.current.condition.text,
               conditionIcon: data.current.condition.icon,
-              errorCatch: undefined,
               error: undefined,
-              nameError: undefined,
             });
           })
           .catch(error => {
             if (error.message === '400') {
               this.defaultStateFunction()
               this.setState({
-                error: undefined,
-                errorCatch: undefined,
-                nameError: 'Неверное название города'
+                error: 'Неверное название города',
               })
             } else {
               this.defaultStateFunction()
               this.setState({
-                error: undefined,
-                nameError: undefined,
-                errorCatch: "Сервер недоступен" } )
+                error: "Сервер недоступен" } )
             }})
           .finally(() => {
             this.setState({isLoading: false})
           })
-    } else {
+    }
+    else {
       this.defaultStateFunction()
       this.setState({
-        error: 'Введите название города!',
-        nameError: undefined,
-        errorCatch: undefined
+        error: 'Введите название города'
       });
     }
   }
+
+  handleClick = () => {
+    this.defaultStateFunction()
+    this.setState({
+      error: undefined
+    }) }
 
   render() {
     return (
@@ -99,15 +96,7 @@ class App extends Component {
 
         {this.state.isLoading  ? <CircularIndeterminate /> :
           <WeatherInfo
-            city={this.state.city}
-            country={this.state.country}
-            temp_c={this.state.temp_c}
-            localtime={this.state.localtime}
-            error={this.state.error}
-            conditionText={this.state.conditionText}
-            conditionIcon={this.state.conditionIcon}
-            errorCatch={this.state.errorCatch}
-            nameError={this.state.nameError}
+            state={this.state}
           />
         }
       </div>
@@ -116,3 +105,4 @@ class App extends Component {
 }
 
 export default App;
+

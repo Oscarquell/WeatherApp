@@ -4,32 +4,24 @@ import "./style.css"
 const WeatherInfo = (props) => {
 
   const {
-    city,
-    country,
-    temp_c,
-    localtime,
-    error,
-    conditionText,
-    conditionIcon,
-    errorCatch,
-    nameError
+    state
   } = props
 
   return (
     <div className="weather-block">
-      {city &&
+      {state.city &&
         <div>
-          <p className='city'>{city}, {country}
+          <p className='city'>{state.city}, {state.country}
             <>
-              <img src={conditionIcon} alt=""/>
+              <img src={state.conditionIcon} alt=""/>
             </>
           </p>
-          <p className='city'>Облачность:  {conditionText}</p>
-          <p className='city'>Температура воздуха:  {temp_c} °C</p>
-          <p className='city'>Местное время: {localtime}</p>
+          <p className='city'>Облачность:  {state.conditionText}</p>
+          <p className='city'>Температура воздуха:  {state.temp_c} °C</p>
+          <p className='city'>Местное время: {state.localtime}</p>
         </div>
       }
-      <p className="error-text">{error}{errorCatch}{nameError}</p>
+      <p className="error-text">{state.error}</p>
 
     </div>
   );
