@@ -35,7 +35,11 @@ class App extends Component {
     const city = event.target.elements.city.value;
 
     if (city) {
-        this.setState({isLoading: true})
+        this.setState({
+          isLoading: true,
+          error: undefined
+        });
+        this.defaultStateFunction();
         fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`)
           .then(response => {
             if (!response.ok) {
