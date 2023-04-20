@@ -11,14 +11,10 @@ const WeatherInfo = (props) => {
     <div className="weather-block">
       {state.city &&
         <div>
-          <p className='city'>{state.city}, {state.country}
-            <>
-              <img src={state.conditionIcon} alt=""/>
-            </>
-          </p>
-          <p className='city'>Облачность:  {state.conditionText}</p>
-          <p className='city'>Температура воздуха:  {state.temp_c} °C</p>
-          <p className='city'>Местное время: {state.localtime}</p>
+          <div> <img src={state.conditionIcon} alt=""/></div>
+          <p className='city'>{state.city}, {state.country}</p>
+          <p className='temp_c'>{state.temp_c} °C</p>
+          <p className='conditionText'>Cloudiness:  {state.conditionText}</p>
         </div>
       }
       <p className="error-text">{state.error}</p>

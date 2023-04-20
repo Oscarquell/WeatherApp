@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from "./components/header";
 import Form from "./components/form";
 import WeatherInfo from "./components/weather";
 import CircularIndeterminate from "./components/loader";
@@ -59,7 +58,7 @@ class App extends Component {
             if (error.message === '400') {
               this.defaultStateFunction()
               this.setState({
-                error: 'Неверное название города',
+                error: 'In the request there is a syntax error.',
               })
             } else {
               this.defaultStateFunction()
@@ -73,7 +72,7 @@ class App extends Component {
     else {
       this.defaultStateFunction()
       this.setState({
-        error: 'Введите название города'
+        error: 'Enter location name'
       });
     }
   }
@@ -86,23 +85,32 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <Header />
-
-        <Form
-          getWeather={this.getWeather}
-          handleClick={this.handleClick}
-        />
-
-        {this.state.isLoading  ? <CircularIndeterminate /> :
-          <WeatherInfo
-            state={this.state}
+      <div>
+        {this.state.isLoading ? <CircularIndeterminate /> : <></>}
+        <div
+            className="container"
+            style={{
+              height: this.state.city || this.state.error ? '505px' : '105px',
+            }}
+        >
+          <Form
+              getWeather={this.getWeather}
+              handleClick={this.handleClick}
           />
-        }
+          {
+            this.state.error ?
+                <i className='error-image'></i> : undefined
+          }
+          <WeatherInfo
+              state={this.state}
+          />
+        </div>
       </div>
     );
   }
 }
 
 export default App;
+
+// {this.state.isLoading ? <CircularIndeterminate /> : <></>}
 
