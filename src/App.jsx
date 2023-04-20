@@ -3,6 +3,7 @@ import Form from "./components/form";
 import WeatherInfo from "./components/weather";
 import CircularIndeterminate from "./components/loader";
 import './App.css'
+import NotFound from "./components/404-component";
 
 const API_KEY = '22bb777a7c074b4a96f72145221412';
 
@@ -16,7 +17,8 @@ class App extends Component {
     conditionText: undefined,
     conditionIcon: undefined,
     isLoading: false,
-    error: undefined
+    error: undefined,
+    error404: undefined
   }
 
   defaultStateFunction() {
@@ -37,8 +39,8 @@ class App extends Component {
     if (city) {
         this.setState({
           isLoading: true,
-          error: undefined
-        });
+          error: undefined,
+          error404: undefined});
         this.defaultStateFunction();
         fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`)
           .then(response => {
@@ -56,6 +58,7 @@ class App extends Component {
               conditionText: data.current.condition.text,
               conditionIcon: data.current.condition.icon,
               error: undefined,
+              error404: undefined
             });
           })
           .catch(error => {
@@ -63,11 +66,14 @@ class App extends Component {
               this.defaultStateFunction()
               this.setState({
                 error: 'In the request there is a syntax error.',
+                error404: undefined
               })
             } else {
               this.defaultStateFunction()
               this.setState({
-                error: "Сервер недоступен" } )
+                error: undefined,
+                error404: true
+              } )
             }})
           .finally(() => {
             this.setState({isLoading: false})
@@ -76,7 +82,8 @@ class App extends Component {
     else {
       this.defaultStateFunction()
       this.setState({
-        error: 'Enter location name'
+        error: 'Enter location name',
+        error404: undefined
       });
     }
   }
@@ -84,7 +91,8 @@ class App extends Component {
   handleClick = () => {
     this.defaultStateFunction()
     this.setState({
-      error: undefined
+      error: undefined,
+      error404: undefined
     }) }
 
   render() {
@@ -94,20 +102,15 @@ class App extends Component {
         <div
             className="container"
             style={{
-              height: this.state.city || this.state.error ? '505px' : '105px',
-            }}
-        >
+              height: this.state.city || this.state.error || this.state.error404 ? '505px' : '105px',
+            }} >
           <Form
               getWeather={this.getWeather}
               handleClick={this.handleClick}
           />
-          {
-            this.state.error ?
-                <i className='error-image'></i> : undefined
-          }
-          <WeatherInfo
-              state={this.state}
-          />
+          { this.state.error ? <i className='error-image' /> : undefined }
+          { this.state.error404 ? <NotFound /> : <></> }
+          <WeatherInfo  state={this.state} />
         </div>
       </div>
     );
