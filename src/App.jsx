@@ -42,7 +42,7 @@ class App extends Component {
           error: undefined,
           error404: undefined});
         this.defaultStateFunction();
-        fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`)
+        fetch(` https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`)
           .then(response => {
             if (!response.ok) {
               throw new Error(response.status);
