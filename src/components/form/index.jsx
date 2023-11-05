@@ -10,7 +10,7 @@ class Form extends Component {
                 <input
                     type="text"
                     name="city"
-                    placeholder="Search location"
+                    placeholder="Search"
                     className='input-field'
                 />
                 <button className='fa-solid fa-magnifying-glass'></button>
